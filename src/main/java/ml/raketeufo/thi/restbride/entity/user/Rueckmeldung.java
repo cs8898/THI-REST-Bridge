@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride.entity;
+package ml.raketeufo.thi.restbride.entity.user;
 
 public class Rueckmeldung {
     public Boolean rueckgemeldet;

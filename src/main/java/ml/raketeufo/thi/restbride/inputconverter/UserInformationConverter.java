@@ -1,9 +1,9 @@
 package ml.raketeufo.thi.restbride.inputconverter;
 
-import ml.raketeufo.thi.restbride.entity.Adresse;
-import ml.raketeufo.thi.restbride.entity.Pruefungsordnung;
-import ml.raketeufo.thi.restbride.entity.Rueckmeldung;
-import ml.raketeufo.thi.restbride.entity.UserInformation;
+import ml.raketeufo.thi.restbride.entity.user.Adresse;
+import ml.raketeufo.thi.restbride.entity.user.Pruefungsordnung;
+import ml.raketeufo.thi.restbride.entity.user.Rueckmeldung;
+import ml.raketeufo.thi.restbride.entity.user.UserInformation;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
