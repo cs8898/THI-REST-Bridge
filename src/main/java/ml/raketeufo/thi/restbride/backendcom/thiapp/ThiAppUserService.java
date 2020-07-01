@@ -51,6 +51,6 @@ public class ThiAppUserService extends BaseService {
         params.put(PARAM_DETAIL, detail);
 
         JsonObject response = this.submitRequest(METHOD_STPL, session, params);
-        return new TimetableResponse(response);
+        return new TimetableResponse(response, detail == 1);
     }
 }
