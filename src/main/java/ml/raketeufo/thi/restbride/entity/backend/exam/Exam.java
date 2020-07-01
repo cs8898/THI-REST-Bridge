@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride.entity.grades;
+package ml.raketeufo.thi.restbride.entity.exam;
 
 public class Exam {
     public String titel;

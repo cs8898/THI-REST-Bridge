@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride.entity.grades;
+package ml.raketeufo.thi.restbride.entity.exam;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -188,3 +188,6 @@ buildNumber.properties
 
 /.idea
 *.iml
+
+
+/src/main/resources/*Key.pem
