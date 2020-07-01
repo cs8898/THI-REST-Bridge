@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ConfigProvider {
+    private static final String DUMMY_VALUE = "##dummy##";
     @ConfigProperty(name = "bridge.domain")
     String domain;
 
@@ -23,6 +24,9 @@ public class ConfigProvider {
 
     @ConfigProperty(name = "bridge.token.auth.expirytime")
     Long authExpiryTime;
+
+    @ConfigProperty(name = "bridge.oauth.allowedclients", defaultValue = DUMMY_VALUE)
+    String allowedClients;
 
     public String getDomain() {
         return domain;
@@ -46,5 +50,11 @@ public class ConfigProvider {
 
     public Long getAuthExpiryTime() {
         return authExpiryTime;
+    }
+
+    public String getAllowedClients() {
+        if (DUMMY_VALUE.equals(allowedClients))
+            return "";
+        return allowedClients;
     }
 }

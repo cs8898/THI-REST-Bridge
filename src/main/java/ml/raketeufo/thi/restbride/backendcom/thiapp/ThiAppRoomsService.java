@@ -2,8 +2,10 @@ package ml.raketeufo.thi.restbride.backendcom.thiapp;
 
 import ml.raketeufo.thi.restbride.backendcom.BaseService;
 import ml.raketeufo.thi.restbride.backendcom.response.RoomsResponse;
+import ml.raketeufo.thi.restbride.config.ConfigProvider;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -18,8 +20,9 @@ public class ThiAppRoomsService extends BaseService {
     private static final String PARAM_MONTH = "month";
     private static final String PARAM_DAY = "day";
 
-    protected ThiAppRoomsService() {
-        super(SERVICE_NAME);
+    @Inject
+    protected ThiAppRoomsService(ConfigProvider configProvider) {
+        super(configProvider, SERVICE_NAME);
     }
 
     public RoomsResponse getRooms(String session) {

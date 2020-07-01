@@ -3,8 +3,10 @@ package ml.raketeufo.thi.restbride.backendcom.session;
 import ml.raketeufo.thi.restbride.backendcom.BaseService;
 import ml.raketeufo.thi.restbride.backendcom.response.BaseResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.SessionOpenResponse;
+import ml.raketeufo.thi.restbride.config.ConfigProvider;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import java.util.HashMap;
 
@@ -22,8 +24,9 @@ public class SessionService extends BaseService {
     public static final String PARAM_USERNAME = "username";
     public static final String PARAM_PASSWD = "passwd";
 
-    public SessionService() {
-        super(SERVICE_NAME);
+    @Inject
+    public SessionService(ConfigProvider configProvider) {
+        super(configProvider, SERVICE_NAME);
     }
 
     public SessionOpenResponse login(String username, String password) {

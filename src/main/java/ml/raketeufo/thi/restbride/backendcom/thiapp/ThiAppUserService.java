@@ -4,8 +4,10 @@ import ml.raketeufo.thi.restbride.backendcom.BaseService;
 import ml.raketeufo.thi.restbride.backendcom.response.GradesResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.PersDataResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.TimetableResponse;
+import ml.raketeufo.thi.restbride.config.ConfigProvider;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,8 +26,9 @@ public class ThiAppUserService extends BaseService {
     private static final String PARAM_DAY = "day";
     private static final String PARAM_DETAIL = "details";
 
-    public ThiAppUserService() {
-        super(SERVICE_NAME);
+    @Inject
+    public ThiAppUserService(ConfigProvider configProvider) {
+        super(configProvider, SERVICE_NAME);
     }
 
     public PersDataResponse getPersonalData(String session) {

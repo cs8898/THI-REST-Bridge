@@ -1,7 +1,6 @@
 package ml.raketeufo.thi.restbride.backendcom;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jose4j.json.internal.json_simple.JSONObject;
+import ml.raketeufo.thi.restbride.config.ConfigProvider;
 
 import javax.json.JsonObject;
 import javax.ws.rs.client.*;
@@ -13,20 +12,22 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public abstract class BaseService {
-    //@ConfigProperty(name = "bridge.backend.baseurl", defaultValue = "https://hiplan.thi.de/webservice/production2/index.php")
-    public String BASE_URL = "https://hiplan.thi.de/webservice/production2/index.php";
+public class BaseService {
+
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
-    private final String service;
-    private final WebTarget target;
+    private String service;
+    private WebTarget target;
 
-    protected BaseService(String service) {
+    public BaseService() {
+    }
+
+    protected BaseService(ConfigProvider configProvider, String service) {
         this.service = service;
         this.target = ClientBuilder.newBuilder()
                 .executorService(EXECUTOR_SERVICE)
                 .build()
-                .target(BASE_URL);
+                .target(configProvider.getBackendurl());
     }
 
     protected JsonObject submitRequest(String method, HashMap<String, Object> params) {
@@ -56,7 +57,7 @@ public abstract class BaseService {
                 .buildPost(form)
                 .invoke();
 
-        int status = response.getStatus();
+        //int status = response.getStatus();
 
         return response.readEntity(JsonObject.class);
     }

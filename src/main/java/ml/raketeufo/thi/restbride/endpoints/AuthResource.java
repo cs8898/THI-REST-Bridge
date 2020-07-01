@@ -24,6 +24,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.JsonString;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Optional;
@@ -74,7 +75,10 @@ public class AuthResource {
             authResponse.token = tokenGenerator.generateFrom(response);
             authResponse.exp = configProvider.getAuthExpiryTime();
 
-            return Response.ok(authResponse).build();
+            return Response.ok(authResponse)
+                    .header(HttpHeaders.CACHE_CONTROL, "no-store")
+                    .header("Pragma", "no-cache")
+                    .build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).entity(response).build();
     }
