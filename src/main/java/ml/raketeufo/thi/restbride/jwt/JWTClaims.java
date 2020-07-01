@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride;
+package ml.raketeufo.thi.restbride.jwt;
 
 import org.eclipse.microprofile.jwt.Claims;
 

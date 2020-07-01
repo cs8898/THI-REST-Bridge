@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride.entity.user;
+package ml.raketeufo.thi.restbride.entity.backend.user;
 
 public class UserInformation {
     // public String aaspf_echt;

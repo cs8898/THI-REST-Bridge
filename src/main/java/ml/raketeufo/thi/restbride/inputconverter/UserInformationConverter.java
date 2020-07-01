@@ -1,9 +1,9 @@
 package ml.raketeufo.thi.restbride.inputconverter;
 
-import ml.raketeufo.thi.restbride.entity.user.Adresse;
-import ml.raketeufo.thi.restbride.entity.user.Pruefungsordnung;
-import ml.raketeufo.thi.restbride.entity.user.Rueckmeldung;
-import ml.raketeufo.thi.restbride.entity.user.UserInformation;
+import ml.raketeufo.thi.restbride.entity.backend.user.Adresse;
+import ml.raketeufo.thi.restbride.entity.backend.user.Pruefungsordnung;
+import ml.raketeufo.thi.restbride.entity.backend.user.Rueckmeldung;
+import ml.raketeufo.thi.restbride.entity.backend.user.UserInformation;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -11,12 +11,12 @@ import javax.json.JsonObject;
 
 public class UserInformationConverter {
 
-    public static UserInformation convert(JsonObject json){
+    public static UserInformation convert(JsonObject json) {
         UserInformation userInfo = new UserInformation();
         JsonArray dataArray = json.getJsonArray("data");
         JsonObject data = dataArray.getJsonObject(1);
         String pcounter = data.getString("pcounter");
-        pcounter = pcounter.replaceAll("€","");
+        pcounter = pcounter.replaceAll("€", "");
         userInfo.printerCredit = Double.parseDouble(pcounter);
         data = data.getJsonObject("persdata");
         userInfo.bibliotheksNummer = data.getString("bibnr");
@@ -34,7 +34,7 @@ public class UserInformationConverter {
 
         Pruefungsordnung pruefungsordnung = new Pruefungsordnung();
         pruefungsordnung.url = data.getString("po_url");
-        pruefungsordnung.version = data.getString("pver");
+        pruefungsordnung.version = data.getString("pvers");
         userInfo.pruefungsordnung = pruefungsordnung;
 
         Rueckmeldung rueckmeldung = new Rueckmeldung();

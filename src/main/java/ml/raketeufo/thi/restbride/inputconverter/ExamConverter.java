@@ -1,8 +1,8 @@
 package ml.raketeufo.thi.restbride.inputconverter;
 
 import ml.raketeufo.thi.restbride.commons.Commons;
-import ml.raketeufo.thi.restbride.entity.grades.Exam;
-import ml.raketeufo.thi.restbride.entity.grades.ExamGroup;
+import ml.raketeufo.thi.restbride.entity.backend.exam.Exam;
+import ml.raketeufo.thi.restbride.entity.backend.exam.ExamGroup;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -25,12 +25,27 @@ public class ExamConverter {
             } else {
                 exam = new Exam();
             }
-            //exam.angerechnet anrech
+
+            exam.fehlversuche = 0;
+            exam.angerechnet = "*".equals(obj.getString("anrech"));
             exam.ects = Commons.parseDoubleString(obj.getString("ects"));
             exam.fristSemester = obj.getString("fristsem");
             exam.kztn = kztn;
             exam.modulNummer = obj.getString("pon");
-            exam.note = Commons.parseDoubleString(obj.getString("note"));
+            try {
+                String noteString = obj.getString("note").replace("*", "");
+                if ("E".equals(noteString)) {
+                    noteString = "1,0";
+                }
+                if (noteString.contains("-")) {
+                    noteString = noteString.replace("-", "");
+                    exam.fehlversuche++;
+                }
+                exam.note = Commons.parseDoubleString(noteString);
+            } catch (NumberFormatException e) {
+                System.out.println("Error Parsing:\n" + obj.toString());
+                throw e;
+            }
             exam.studiengang = obj.getString("stg");
             exam.titel = obj.getString("titel");
             //exam.wahlPflichtFach frwpf
@@ -39,7 +54,7 @@ public class ExamConverter {
                 Optional<Exam> examGroup = exams.stream().filter(ex -> ex instanceof ExamGroup && ex.modulNummer.equals(exam.modulNummer))
                         .findAny();
                 examGroup.ifPresent(value -> ((ExamGroup) value).unterPruefungen.add(exam));
-            }else {
+            } else {
                 exams.add(exam);
             }
         }

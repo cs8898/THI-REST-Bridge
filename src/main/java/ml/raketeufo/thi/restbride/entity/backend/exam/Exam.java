@@ -1,4 +1,4 @@
-package ml.raketeufo.thi.restbride.entity.exam;
+package ml.raketeufo.thi.restbride.entity.backend.exam;
 
 public class Exam {
     public String titel;
@@ -11,4 +11,5 @@ public class Exam {
     public String modulNummer;
     public String studiengang;
 
+    public int fehlversuche;
 }
