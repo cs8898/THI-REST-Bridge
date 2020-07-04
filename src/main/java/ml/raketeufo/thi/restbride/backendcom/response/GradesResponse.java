@@ -1,8 +1,7 @@
 package ml.raketeufo.thi.restbride.backendcom.response;
 
-import ml.raketeufo.thi.restbride.entity.backend.exam.Exam;
-import ml.raketeufo.thi.restbride.entity.backend.user.UserInformation;
-import ml.raketeufo.thi.restbride.inputconverter.ExamConverter;
+import ml.raketeufo.thi.restbride.entity.backend.grade.Grade;
+import ml.raketeufo.thi.restbride.inputconverter.GradeConverter;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -15,14 +14,14 @@ public class GradesResponse extends BaseResponse {
     @JsonbTransient
     int magicnumber;
 
-    List<Exam> exams;
+    List<Grade> grades;
 
     public int getMagicnumber() {
         return this.magicnumber;
     }
 
-    public List<Exam> getExams() {
-        return exams;
+    public List<Grade> getGrades() {
+        return grades;
     }
 
     public GradesResponse(JsonObject obj) {
@@ -35,7 +34,7 @@ public class GradesResponse extends BaseResponse {
         if (isOk()) {
             JsonArray dataArray = obj.getJsonArray(DATA);
             magicnumber = dataArray.getInt(INDEX_MAGICNUMBER);
-            this.exams = ExamConverter.convert(obj);
+            this.grades = GradeConverter.convert(obj);
         }
     }
 }

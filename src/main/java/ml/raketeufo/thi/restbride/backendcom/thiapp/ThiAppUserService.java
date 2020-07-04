@@ -1,6 +1,7 @@
 package ml.raketeufo.thi.restbride.backendcom.thiapp;
 
 import ml.raketeufo.thi.restbride.backendcom.BaseService;
+import ml.raketeufo.thi.restbride.backendcom.response.ExamsResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.GradesResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.PersDataResponse;
 import ml.raketeufo.thi.restbride.backendcom.response.TimetableResponse;
@@ -25,6 +26,7 @@ public class ThiAppUserService extends BaseService {
     private static final String PARAM_MONTH = "month";
     private static final String PARAM_DAY = "day";
     private static final String PARAM_DETAIL = "details";
+    private static final String METHOD_EXAMS = "exams";
 
     @Inject
     public ThiAppUserService(ConfigProvider configProvider) {
@@ -38,7 +40,6 @@ public class ThiAppUserService extends BaseService {
 
     public GradesResponse getGrades(String session) {
         JsonObject response = this.submitRequest(METHOD_GRADES, session, null);
-        System.out.println(response);
         return new GradesResponse(response);
     }
 
@@ -55,5 +56,11 @@ public class ThiAppUserService extends BaseService {
 
         JsonObject response = this.submitRequest(METHOD_STPL, session, params);
         return new TimetableResponse(response, detail == 1);
+    }
+
+    public ExamsResponse getExams(String session) {
+        JsonObject response = this.submitRequest(METHOD_EXAMS, session, null);
+        //System.out.println(response);
+        return new ExamsResponse(response);
     }
 }

@@ -11,6 +11,7 @@ public class BaseResponse {
         OK(0),
         SERVICE_NOT_AVAILABLE(-112),
         NO_SESSION(-115),
+        NO_RESERVATION_DATA(-126),
         UNKNOWN(Integer.MIN_VALUE);
 
         private final int code;

@@ -1,9 +1,6 @@
 package ml.raketeufo.thi.restbride.endpoints;
 
-import ml.raketeufo.thi.restbride.backendcom.response.BaseResponse;
-import ml.raketeufo.thi.restbride.backendcom.response.GradesResponse;
-import ml.raketeufo.thi.restbride.backendcom.response.PersDataResponse;
-import ml.raketeufo.thi.restbride.backendcom.response.TimetableResponse;
+import ml.raketeufo.thi.restbride.backendcom.response.*;
 import ml.raketeufo.thi.restbride.backendcom.thiapp.ThiAppUserService;
 import ml.raketeufo.thi.restbride.jwt.JWTClaims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -65,11 +62,35 @@ public class UserResource {
                     schema = @Schema(implementation = GradesResponse.class)
             )
     )
-    @Operation(summary = "Fetch Exams and Grades", description = "Fetches Exams and Grades for User")
+    @Operation(summary = "Fetch Grades", description = "Fetches Grades for User")
     public Response getGrades() {
         if (jwt.containsClaim(JWTClaims.sid.name())) {
             String session = jwt.getClaim(JWTClaims.sid.name());
             GradesResponse response = thiAppUserService.getGrades(session);
+            if (response.isOk()) {
+                return Response.ok(response).build();
+            } else {
+                return Response.status(Response.Status.UNAUTHORIZED).entity(response).build();
+            }
+        } else {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+    }
+
+    @GET
+    @Path("exams")
+    @Produces(MediaType.APPLICATION_JSON)
+    @APIResponse(
+            content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON,
+                    schema = @Schema(implementation = ExamsResponse.class)
+            )
+    )
+    @Operation(summary = "Fetch Exams", description = "Fetches Exam Registration for User")
+    public Response getExams() {
+        if (jwt.containsClaim(JWTClaims.sid.name())) {
+            String session = jwt.getClaim(JWTClaims.sid.name());
+            ExamsResponse response = thiAppUserService.getExams(session);
             if (response.isOk()) {
                 return Response.ok(response).build();
             } else {

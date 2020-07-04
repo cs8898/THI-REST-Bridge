@@ -24,6 +24,7 @@ public class TimetableResponse extends BaseResponse {
 
     @Override
     public void map(JsonObject obj) {
+        super.map(obj);
         if (isOk()) {
             this.timetable = TimetableConverter.convert(obj, details);
         }
