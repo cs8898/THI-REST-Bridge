@@ -7,8 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ConfigProvider {
     private static final String DUMMY_VALUE = "##dummy##";
-    @ConfigProperty(name = "bridge.domain")
-    String domain;
 
     @ConfigProperty(name = "bridge.backend.url")
     String backendurl;
@@ -27,10 +25,6 @@ public class ConfigProvider {
 
     @ConfigProperty(name = "bridge.oauth.allowedclients", defaultValue = DUMMY_VALUE)
     String allowedClients;
-
-    public String getDomain() {
-        return domain;
-    }
 
     public String getBackendurl() {
         return backendurl;
