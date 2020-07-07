@@ -1,0 +1,24 @@
+os:
+  - linux
+dist: xenial
+language: java
+
+services: docker
+
+env:
+  global:
+    - DOCKER_IMAGE_NAME=THI-REST-Bridge
+    - DOCKER_REPOSITORY=$DOCKER_USERNAME/$DOCKER_IMAGE_NAME
+
+script:
+  - ./mvnw package -Pnative -Dquarkus.native.container-build=true || travis_terminate 1;
+  - docker build -f src/main/docker/Dockerfile.native -t $DOCKER_IMAGE_NAME . || travis_terminate 1;
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
+
+deploy:
+  provider: script
+  script: ./.travis/dockerhub
+  on:
+    branch: master
