@@ -7,7 +7,7 @@ services: docker
 
 env:
   global:
-    - DOCKER_IMAGE_NAME=THI-REST-Bridge
+    - DOCKER_IMAGE_NAME=thi-rest-bridge
     - DOCKER_REPOSITORY=$DOCKER_USERNAME/$DOCKER_IMAGE_NAME
 
 script:
