@@ -11,7 +11,7 @@ env:
     - DOCKER_REPOSITORY=$DOCKER_USERNAME/$DOCKER_IMAGE_NAME
 
 script:
-  - ./mvnw package -Pnative -Dquarkus.native.container-build=true || travis_terminate 1;
+  - travis_wait 30 ./mvnw package -Pnative -Dquarkus.native.container-build=true || travis_terminate 1;
   - docker build -f src/main/docker/Dockerfile.native -t $DOCKER_IMAGE_NAME . || travis_terminate 1;
 
 before_deploy:
