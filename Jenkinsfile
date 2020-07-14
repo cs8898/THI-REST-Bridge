@@ -9,12 +9,12 @@ agent any
     }
 
     stages {
-        stage {'Build'} {
+        stage ('Build') {
             steps {
                 sh './mvnw package -Pnative -Dquarkus.native.container-build=true'
             }
         }
-        stage {'Deploy'} {
+        stage ('Deploy') {
             steps {
                   sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
                   sh 'docker build -f src/main/docker/Dockerfile.native -t $DOCKER_IMAGE_NAME .'
