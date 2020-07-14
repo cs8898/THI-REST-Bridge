@@ -5,7 +5,7 @@ agent any
         DOCKER_IMAGE_NAME='thi-rest-bridge'
         DOCKER_USERNAME = "${env.DOCKER_CREDENTIALS_USR}"
         DOCKER_PASSWORD = "${env.DOCKER_CREDENTIALS_PSW}"
-        DOCKER_REPOSITORY = "${env.DOCKER_DOCKER_CREDENTIALS_USR}/${env.DOCKER_IMAGE_NAME}"
+        DOCKER_REPOSITORY = "${env.DOCKER_CREDENTIALS_USR}/${env.DOCKER_IMAGE_NAME}"
     }
 
     stages {
@@ -22,7 +22,7 @@ agent any
         stage ('Deploy') {
             steps {
                   sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-                  sh 'docker tag $DOCKER_IMAGE $DOCKER_REPOSITORY:latest && docker push $DOCKER_REPOSITORY:latest'
+                  sh 'docker tag $DOCKER_IMAGE_NAME $DOCKER_REPOSITORY:latest && docker push $DOCKER_REPOSITORY:latest'
             }
         }
     }
