@@ -14,7 +14,7 @@ agent any
                 sh './mvnw package -Pnative -Dquarkus.native.container-build=true'
             }
         }
-        stage ('Packege') {
+        stage ('Package') {
             steps {
                   sh 'docker build -f src/main/docker/Dockerfile.native -t $DOCKER_IMAGE_NAME .'
             }
