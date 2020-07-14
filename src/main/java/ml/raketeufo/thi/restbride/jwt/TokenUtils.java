@@ -8,6 +8,7 @@ import org.eclipse.microprofile.jwt.Claims;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -70,9 +71,12 @@ public class TokenUtils {
      */
     public static PrivateKey readPrivateKey(final String pemResName) throws Exception {
         try (InputStream contentIS = TokenUtils.class.getResourceAsStream(pemResName)) {
+            if (contentIS == null) {
+                throw new RuntimeException(pemResName + " not accessable");
+            }
             byte[] tmp = new byte[4096];
             int length = contentIS.read(tmp);
-            return decodePrivateKey(new String(tmp, 0, length, "UTF-8"));
+            return decodePrivateKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
         }
     }
 
