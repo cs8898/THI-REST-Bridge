@@ -1,7 +1,7 @@
 pipeline{
 agent any
     environment {
-        DOCKER_CREDENTIALS = credentials('jenkins-docker-repo'),
+        DOCKER_CREDENTIALS = credentials('jenkins-docker-repo')
         DOCKER_USERNAME="${env.DOCKER_DOCKER_CREDENTIALS_USR}"
         DOCKER_PASSWORD = "${env.DOCKER_CREDENTIALS_PSW}"
         DOCKER_IMAGE_NAME='thi-rest-bridge'
