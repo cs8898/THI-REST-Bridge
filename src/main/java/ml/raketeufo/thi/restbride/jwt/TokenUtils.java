@@ -7,8 +7,13 @@ import org.eclipse.microprofile.jwt.Claims;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -39,7 +44,7 @@ public class TokenUtils {
     public String generateTokenString(Map<String, Long> timeClaims, Map<String, Object> claimsMap)
             throws Exception {
         // Use the test private key associated with the test public key for a valid signature
-        PrivateKey pk = readPrivateKey(configProvider.getPrivateKey());
+        PrivateKey pk = readPrivateKey();
         return generateTokenString(pk, configProvider.getPrivateKey(), timeClaims, claimsMap);
     }
 
@@ -65,18 +70,32 @@ public class TokenUtils {
     /**
      * Read a PEM encoded private key from the classpath
      *
-     * @param pemResName - key file resource name
      * @return PrivateKey
      * @throws Exception on decode failure
      */
-    public static PrivateKey readPrivateKey(final String pemResName) throws Exception {
-        try (InputStream contentIS = TokenUtils.class.getResourceAsStream(pemResName)) {
+    private PrivateKey readPrivateKey() {
+        final String pemResName = configProvider.getPrivateKey();
+        final boolean isResource = configProvider.isPrivateKeyResource();
+        InputStream contentIS;
+        if (isResource) {
+            contentIS = TokenUtils.class.getResourceAsStream(pemResName);
+        } else {
+            Path path = Paths.get(pemResName);
+            try {
+                contentIS = Files.newInputStream(path);
+            } catch (IOException e) {
+                contentIS = null;
+            }
+        }
+        try {
             if (contentIS == null) {
-                throw new RuntimeException(pemResName + " not accessable");
+                throw new RuntimeException(String.format("Private Key \"%s\" not accessible", pemResName));
             }
             byte[] tmp = new byte[4096];
             int length = contentIS.read(tmp);
             return decodePrivateKey(new String(tmp, 0, length, StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

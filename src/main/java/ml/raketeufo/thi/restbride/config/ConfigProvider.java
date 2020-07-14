@@ -17,6 +17,9 @@ public class ConfigProvider {
     @ConfigProperty(name = "bridge.token.privatekey.location")
     String privateKey;
 
+    @ConfigProperty(name = "bridge.token.privatekey.resource", defaultValue = "false")
+    Boolean privateKeyResource;
+
     @ConfigProperty(name = "bridge.token.groups")
     String groupsString;
 
@@ -50,5 +53,9 @@ public class ConfigProvider {
         if (DUMMY_VALUE.equals(allowedClients))
             return "";
         return allowedClients;
+    }
+
+    public boolean isPrivateKeyResource() {
+        return privateKeyResource;
     }
 }
