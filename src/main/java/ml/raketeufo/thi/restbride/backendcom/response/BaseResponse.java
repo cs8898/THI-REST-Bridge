@@ -40,10 +40,10 @@ public class BaseResponse {
     protected static final String DATA = "data";
 
     @JsonbTransient
-    private Status status;
-    private String error;
+    protected Status status;
+    protected String error;
 
-    private LocalDateTime timestamp;
+    protected LocalDateTime timestamp;
 
     public BaseResponse(JsonObject obj) {
         this.map(obj);

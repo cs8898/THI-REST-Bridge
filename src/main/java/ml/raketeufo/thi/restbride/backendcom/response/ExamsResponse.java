@@ -6,6 +6,7 @@ import ml.raketeufo.thi.restbride.inputconverter.ExamConverter;
 import ml.raketeufo.thi.restbride.inputconverter.TimetableConverter;
 
 import javax.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExamsResponse extends BaseResponse {
@@ -22,8 +23,11 @@ public class ExamsResponse extends BaseResponse {
     @Override
     public void map(JsonObject obj) {
         super.map(obj);
-        if (isOk()) {
+        if (super.isOk()) {
             this.exams = ExamConverter.convert(obj);
+        } else if (getStatus() == Status.SERVICE_NOT_AVAILABLE) {
+            this.status = Status.OK;
+            this.exams = new ArrayList<>();
         }
     }
 }
