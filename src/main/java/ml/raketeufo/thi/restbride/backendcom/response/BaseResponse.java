@@ -12,6 +12,7 @@ public class BaseResponse {
         SERVICE_NOT_AVAILABLE(-112),
         NO_SESSION(-115),
         NO_RESERVATION_DATA(-126),
+        QUERY_NOT_POSSIBLE(-102),
         UNKNOWN(Integer.MIN_VALUE);
 
         private final int code;
@@ -42,6 +43,7 @@ public class BaseResponse {
     @JsonbTransient
     protected Status status;
     protected String error;
+    protected Integer errorId;
 
     protected LocalDateTime timestamp;
 
@@ -61,6 +63,10 @@ public class BaseResponse {
         return error;
     }
 
+    public Integer getErrorId() {
+        return errorId;
+    }
+
     public boolean isOk() {
         return status == Status.OK;
     }
@@ -72,6 +78,7 @@ public class BaseResponse {
 
         if (!isOk()) {
             this.error = obj.getString(DATA);
+            this.errorId = obj.getInt(STATUS);
         }
     }
 }

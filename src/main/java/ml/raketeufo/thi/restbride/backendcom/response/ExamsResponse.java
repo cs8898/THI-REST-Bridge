@@ -25,7 +25,7 @@ public class ExamsResponse extends BaseResponse {
         super.map(obj);
         if (super.isOk()) {
             this.exams = ExamConverter.convert(obj);
-        } else if (getStatus() == Status.SERVICE_NOT_AVAILABLE) {
+        } else if (getStatus() == Status.SERVICE_NOT_AVAILABLE || getStatus() == Status.QUERY_NOT_POSSIBLE) {
             this.status = Status.OK;
             this.exams = new ArrayList<>();
         }
