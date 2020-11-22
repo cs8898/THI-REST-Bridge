@@ -1,6 +1,7 @@
 package ml.raketeufo.thi.restbride.backendcom;
 
 import ml.raketeufo.thi.restbride.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.json.JsonObject;
 import javax.ws.rs.client.*;
@@ -18,6 +19,9 @@ public class BaseService {
 
     private String service;
     private WebTarget target;
+
+    @ConfigProperty(name = "bridge.backend.useragent")
+    String defaultUserAgent;
 
     public BaseService() {
     }
@@ -51,8 +55,10 @@ public class BaseService {
 
         MultivaluedHashMap<String, String> multivaluedParams = bodyBuilder.build().getMultivaluedFields();
         Entity<Form> form = Entity.form(multivaluedParams);
+
         Invocation.Builder builder = target.request();
         Response response = builder
+                .header("User-Agent", defaultUserAgent)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .buildPost(form)
                 .invoke();
