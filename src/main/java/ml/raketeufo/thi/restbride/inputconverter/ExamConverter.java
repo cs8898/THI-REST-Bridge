@@ -1,6 +1,7 @@
 package ml.raketeufo.thi.restbride.inputconverter;
 
 import ml.raketeufo.thi.restbride.commons.Commons;
+import ml.raketeufo.thi.restbride.commons.PgArrayUtils;
 import ml.raketeufo.thi.restbride.entity.backend.exam.Exam;
 import ml.raketeufo.thi.restbride.entity.backend.exam.Pruefer;
 
@@ -50,7 +51,8 @@ public class ExamConverter {
                 String[] prueferSplitted = prueferComb.split(";");
                 prueferList.add(new Pruefer(prueferSplitted[0], prueferSplitted[1]));
             }
-            String hilfsmitte = obj.getString("hilfsmittel");
+            String hilfsmitte_pgstr = obj.getString("hilfsmittel");
+            List<String> hilfsmitte = PgArrayUtils.parseStringArray(hilfsmitte_pgstr);
             String art = obj.getString("pruefungs_art");
             int mode = Integer.parseInt(obj.getString("modus"));
             String katalogId = obj.getString("prf_katalog_id");
@@ -64,7 +66,7 @@ public class ExamConverter {
             exam.anmerkung = anmerkung;
             exam.art = art;
             exam.ausserhalbZeitraum = mode == 2;
-            exam.hilfsmittel = new String[]{hilfsmitte};
+            exam.hilfsmittel = hilfsmitte.toArray(new String[0]);
             exam.katalogId = katalogId;
             exam.pruefer = prueferList.toArray(new Pruefer[0]);
             exam.rooms = rooms;
